@@ -1,2 +1,4 @@
 
-export default class UserController
+export default class UserController{
+    
+}

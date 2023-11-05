@@ -11,7 +11,7 @@ export default class UserRouterImpl implements Routes{
 
      useRouter(): Router {
         return this.router
-                        .get("/", async (req: Request, res: Response) : Response =>{
+                        .get("/", async (req: Request, res: Response) =>{
                             return res.send("Test Get")
                         })
                         
