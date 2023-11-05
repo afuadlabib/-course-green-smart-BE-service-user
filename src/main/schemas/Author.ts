@@ -1,6 +1,6 @@
-import History from "../../../../orchestrator/src/main/schemas/History";
+import History from "./History";
 
-export default interface Author extends History{
-    name: string;
-    userId: bigint;
+export default interface Author extends History {
+  name: string;
+  userId: bigint;
 }

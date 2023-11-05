@@ -1,7 +1,7 @@
-import History from "../../../../orchestrator/src/main/schemas/History";
+import History from "./History";
 
-export default interface Teacher extends History{
-    userId: string;
-    fullname: string;
-    courses: any; 
+export default interface Teacher extends History {
+  userId: bigint;
+  fullname: string;
+  courses: bigint[];
 }
