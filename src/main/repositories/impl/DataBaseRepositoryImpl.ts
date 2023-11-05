@@ -11,14 +11,13 @@ export default class DataBaseRepositoryImpl implements DataBaseRepository {
     this.url = url;
     this.connectOptions = connectOptions;
   }
-  connect(): void {
-    this.mongoose
-      .connect(this.url, this.connectOptions)
-      .then((): void => {
-        console.log("Connect to Database Successfully");
-      })
-      .catch((error) => {
-        throw new Error(error);
-      });
+  async connect(): Promise<any> {
+    try {
+      return this.mongoose
+        .connect(this.url, this.connectOptions)
+        .then((): void => console.log("Connect to Database Successfully")); 
+    } catch (error) {
+      throw new Error(`Error Connect to Database: ${error}`);
+    }
   }
 }

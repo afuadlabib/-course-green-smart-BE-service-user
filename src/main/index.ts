@@ -9,13 +9,14 @@ import RoutesImpl from "./routes/impl/RoutesImpl";
 export const appContext = AppContextImpl.run();
 
 const app: Express = express();
-const mongoDb: DataBaseRepositoryImpl = appContext.createDataBaseImpl();
+const database: DataBaseRepositoryImpl = appContext.createDataBaseImpl();
 const port: number = appContext.port;
 const routes: RoutesImpl = appContext.createRoutes();
 
-mongoDb.connect()
+database.connect()
 
 app
+  .use()
   .use(cors())
   .use(morgan("dev"))
   .use(bodyParser.urlencoded({ extended: true }))

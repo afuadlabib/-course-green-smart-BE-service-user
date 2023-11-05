@@ -1,14 +1,26 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Model } from "mongoose";
 import Author from "../Author";
+import ModelSchema from "../ModelSchema";
 
-const author = new Schema<Author>(
-    {
-        name: { type: String, required: true },
-        userId: { type: Number },
-        isDeleted: { type: Number, required: true },
-        createdBy: { type: Number, required: true },
-        deletedBy: { type: Number, required: true },
-    },{ timestamps: true }
-);
+export default class AuthorImpl implements ModelSchema {
+    schema: Schema;
+    modelQuery: Model<any, any>;
 
-export default model("authors", author);
+    constructor(){
+        this.schema = new Schema<Author>(
+            {
+                name: { type: String, required: true },
+                userId: { type: Number },
+                isDeleted: { type: Number, required: true },
+                createdBy: { type: Number, required: true },
+                deletedBy: { type: Number, required: true },
+            },{ timestamps: true }
+        );
+
+        this.modelQuery = model("authors", this.schema)
+    }
+
+    getModelQuery(): Model<any, any>{
+        return this.modelQuery
+    }
+}
