@@ -1,37 +1,37 @@
 import { Model, Query, FilterQuery, CreateOptions } from "mongoose";
 import Services from "../Services";
-import AuthorImpl from "../../schemas/impl/authorImpl";
+import AuthorImpl from "../../models/impl/AuthorImpl";
 
 export default class AuthorServiceImpl implements Services{
     entity: AuthorImpl;
-    query: Model<any, any>;
+    modelQuery: Model<any, any>;
     constructor(){
         this.entity= new AuthorImpl();
-        this.query= this.entity.getModelQuery()
+        this.modelQuery= this.entity.getModelQuery()
     }
 
     find(): Query<any, any> {
-       return this.query.find()
+       return this.modelQuery.find()
     }
 
     findOne(): Query<any, any> {
-        return this.query.findOne()
+        return this.modelQuery.findOne()
     }
 
     findById(id: any): Query<any, any> {
-        return this.query.findById(id)
+        return this.modelQuery.findById(id)
     }
 
     deleteOne(filter: FilterQuery<any>): Query<any, any> {
-        return this.query.deleteOne(filter)
+        return this.modelQuery.deleteOne(filter)
     }
     
     updateOne(filter: FilterQuery<any>): Query<any, any> {
-        return this.query.updateOne(filter)
+        return this.modelQuery.updateOne(filter)
     }
 
     createOne(doc: any[], options?: CreateOptions ): Promise<any[]> {
-        return this.query.create(doc, options)
+        return this.modelQuery.create(doc, options)
     }
     
 }

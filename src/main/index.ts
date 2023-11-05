@@ -1,4 +1,4 @@
-import express, { Express, Router } from "express";
+import express, { Express } from "express";
 import morgan from "morgan";
 import cors from "cors";
 import bodyParser from "body-parser";
@@ -16,7 +16,6 @@ const routes: RoutesImpl = appContext.createRoutes();
 database.connect()
 
 app
-  .use()
   .use(cors())
   .use(morgan("dev"))
   .use(bodyParser.urlencoded({ extended: true }))

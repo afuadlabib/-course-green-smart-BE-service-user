@@ -5,6 +5,7 @@ import AppContext from "../AppContext";
 import { Router } from "express";
 import RoutesImpl from "../../routes/impl/RoutesImpl";
 import UserController from "../../routes/impl/UserRouterImpl";
+import DbConnectionOpt from "../config/DbConnectionOpt";
 
 dotenv.config();
 
@@ -16,10 +17,7 @@ export default class AppContextImpl implements AppContext {
   constructor() {
     this.databaseUrl = <string>process.env.MONGODB_URL;
     this.port = parseInt(<string>process.env.PORT);
-    this.mongoDbOptions = <ConnectOptions>{
-    //   useNewUrlParser: true,
-    //   useUnifiedTopology: true,
-    };
+    this.mongoDbOptions = <ConnectOptions> DbConnectionOpt;
   }
   static run() {
     return new AppContextImpl();
