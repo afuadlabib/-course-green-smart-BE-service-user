@@ -1,15 +1,17 @@
 import DataBaseRepository from "../repositories/dataBaseRepository";
 import { configDotenv } from "dotenv";
 import UserService from "../services/userService";
-import Encrypt from "../utils/bcrypt";
+import Encrypt from "../utils/ecrypt";
 import IRole from "../models/role";
 
 configDotenv();
 
-const database = new DataBaseRepository(<string> process.env.MONGODB_URL)
-const pass: string =  Encrypt.hash("admin") 
+const database = new DataBaseRepository(<string> process.env.MONGODB_URL);
+
+const pass: string =  Encrypt.hash("admin");
 
 database.connect();
+
 const admin =  {
     username: "admin",
     email: "admin@mail.com",
@@ -50,9 +52,11 @@ const user2 =  {
 }
 
 const seeding = async (): Promise<void> => {
-    const u1 = await UserService.create(admin)
-    const u2 = await UserService.create(user1)
-    const u3 = await UserService.create(user2)
+    const u1 = await UserService.create(admin);
+
+    const u2 = await UserService.create(user1);
+
+    const u3 = await UserService.create(user2);
 
     console.log([u1, u2, u3]);
 

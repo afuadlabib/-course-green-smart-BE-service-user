@@ -1,15 +1,25 @@
-import { Query, model } from "mongoose";
+import { FilterQuery, Model, Query, model } from "mongoose";
 import { Schema } from "mongoose";
 import IUser, { UserSchema } from "../models/user";
+import IService from "./Service";
 
-export default class UserService{
+export default class UserService implements IService{
+    private static User: Model<any, any> = model('users', new Schema <IUser>(UserSchema))
 
-    private static User = model('users', new Schema (UserSchema))
+    public static create (doc: any): Promise<any>{
+        return this.User.create(doc);
 
-    static create (doc: any): Promise<any>{
-        return this.User.create(doc)
     }
-    static find (): Query<any, any>  {
-        return this.User.find()
+
+    public static find (): Query<any, any>  {
+        return this.User.find();
+
     }
+
+    public static findOne(filterQuery: FilterQuery<any>): Query<any, any> {
+        return this.User.findOne(filterQuery);
+
+    }
+
+
 }

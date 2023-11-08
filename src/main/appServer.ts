@@ -21,20 +21,31 @@ export default class AppServer{
   public static run(): Server<typeof IncomingMessage, typeof ServerResponse>{
 
     console.log("Connecting database ...");
-    this.db.connect()
+
+    this.db.connect();
+
     console.log("Connect database successfully");
 
     return this.app
+    
                 .use(cors())
+
                 .use(morgan("dev"))
+
                 .use(bodyParser.urlencoded({ extended: true }))
+
                 .use(express.json({ limit: "3MB" }))
+
                 .get("/", (req: Request, res: Response) => {
                   res.status(200).send("Welcome To Service Users");
+
                 })
+
                 .use("/api/v1", this.routes.useRouter())
+
                 .listen(this.port, (): void => {
                   console.log(`Server Running: ${platform} Port: ${this.port}`);
+
                 });
     
   }

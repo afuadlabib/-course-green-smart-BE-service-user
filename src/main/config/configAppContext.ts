@@ -4,6 +4,7 @@ import DataBaseRepository from "../repositories/dataBaseRepository";
 import Routes from "../routes/routes";
 import UserRouter from "../routes/userRouter";
 import UserController from "../controllers/userController";
+import GenerateToken from "../utils/token";
 
 configDotenv()
 
@@ -30,6 +31,10 @@ export default class ConfigAppContext {
 
     public static createUserController(){
         return new UserController()
+    }
+
+    public static createGenerateToken(){
+        return new GenerateToken()
     }
 
 }

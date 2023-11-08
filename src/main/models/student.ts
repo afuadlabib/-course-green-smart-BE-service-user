@@ -12,7 +12,7 @@ export const StudentSchema = {
   fullname: {type: String, required: true},
   schoolId: {type: Number, required: true},
   classId: {type: Number, required: true},
-  isDeleted: { type: String, required: true },
+  isDeleted: { type: Boolean, required: true },
   createdBy: { type: String, required: true },
-  deletedBy: { type: Boolean, required: true },
+  deletedBy: { type: String, required: true },
 }

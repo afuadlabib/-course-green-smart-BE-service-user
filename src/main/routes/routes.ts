@@ -3,12 +3,13 @@ import UserRouter from "./userRouter";
 import ConfigAppContext from "../config/configAppContext";
 
 export default class Routes{
-  router : Router= Router();
+  private router : Router= Router();
 
-  userRouter: UserRouter = ConfigAppContext.createUserRouter()
+  private userRouter: UserRouter = ConfigAppContext.createUserRouter()
 
   public useRouter(): Router {
     return this.router.use("/users", this.userRouter.useRouter());
+
   }
 }
 
