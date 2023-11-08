@@ -8,11 +8,11 @@ export interface IAuthor extends IHistory {
 }
 
 
-export class Author{
+export default class Author{
+  
   getAuthor(): Model<any, any> {
-    return model('authors', new Schema<IAuthor>(AuthorSchema))
+    const authors = new Schema<IAuthor>(AuthorSchema)
+    return model('authors', authors)
   }
 }
 
-
-export default new Author()

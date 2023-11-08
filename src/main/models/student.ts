@@ -10,8 +10,10 @@ export interface IStudent extends IHistory {
 }
 
 export class Student{
+  students = new Schema<IStudent>(StudentSchema)
+
   getStudent() : Model<any, any>{
-    return model('studens', new Schema<IStudent>(StudentSchema)) 
+    return model('studens', this.students) 
   }
 }
 

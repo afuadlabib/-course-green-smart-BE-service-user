@@ -1,18 +1,21 @@
 import mongoose from "mongoose";
-import { configDotenv } from "dotenv";
-
-configDotenv();
+import ConfigAppContext from "../config/configAppContext";
 
 interface IDataBaseRepository {
-  url: string;
+  dbUrl: string;
   connect(): Promise<typeof mongoose>;
 }
 
-export class DataBaseRepository implements IDataBaseRepository {
-  url = <string> process.env.MONGODB_URL;
+export default class DataBaseRepository implements IDataBaseRepository {
+  dbUrl : string;
+
+  constructor(dbUrl: string){
+    this.dbUrl = dbUrl;
+  }
+
   connect() {
-    return mongoose.connect(this.url);
+    return mongoose.connect(this.dbUrl);
   }
 }
 
-export default new DataBaseRepository();
+

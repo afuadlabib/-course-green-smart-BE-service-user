@@ -9,8 +9,10 @@ export interface ITeacher extends IHistory {
 }
 
 export class Teacher{
+  teachers = new Schema<ITeacher>(TeacherSchema);
+
   getTeacher() : Model<any, any> {
-  return model('teachers', new Schema<ITeacher>(TeacherSchema))
+  return model('teachers', this.teachers )
   }
 }
 

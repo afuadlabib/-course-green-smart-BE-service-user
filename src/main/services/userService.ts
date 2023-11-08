@@ -1,20 +1,18 @@
-import user from "../models/user"
-import { Model } from "mongoose"
+import ConfigAppContext from "../config/configAppContext";
+import User from "../models/user";
+import { Model, Query, model } from "mongoose";
+import { Schema } from "mongoose";
+import IUser from "../models/user";
+import UserSchema from "../models/schemas/UserSchema";
 
-interface IUserService{
-    user: Model<any, any>;
-    create(doc: any): Promise<Model<any, any>>;
-    find(): Promise<Model<any, any>>;
-}
+export default class UserService{
 
-export class UserService implements IUserService {
-    user = user.getUser();
+    static User = model('users', new Schema<IUser>(UserSchema))
 
-    async create (doc: any) {
-        return this.user.create(doc)
+    static create (doc: any): Promise<any>{
+        return this.User.create(doc)
     }
-    async find () {
-        return this.user.find()
+    static find (): Query<any, any>  {
+        return this.User.find()
     }
 }
-export default new UserService();
