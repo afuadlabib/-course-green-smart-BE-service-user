@@ -1,29 +1,27 @@
-import express, { Express } from "express";
+import express, { Express, Request, Response } from "express";
 import morgan from "morgan";
 import cors from "cors";
 import bodyParser from "body-parser";
-import AppContextImpl from "./config/impl/AppContextImpl";
-import DataBaseRepositoryImpl from "./repositories/impl/DataBaseRepositoryImpl";
-import RoutesImpl from "./routes/impl/RoutesImpl";
+import dataBaseRepository from "./repositories/dataBaseRepository";
+import routes from "./routes/routes";
+import { configDotenv } from "dotenv";
 
-export const appContext = AppContextImpl.run();
+configDotenv()
 
 const app: Express = express();
-const database: DataBaseRepositoryImpl = appContext.createDataBaseImpl();
-const port: number = appContext.port;
-const routes: RoutesImpl = appContext.createRoutes();
+const port: number = parseInt(<string>process.env.PORT)
 
-database.connect()
+dataBaseRepository.connect()
 
 app
   .use(cors())
   .use(morgan("dev"))
   .use(bodyParser.urlencoded({ extended: true }))
   .use(express.json({ limit: "3MB" }))
-  .get("/", (req: express.Request, res: express.Response) => {
+  .get("/", (req: Request, res: Response) => {
     res.status(200).send("Welcome To Service Users");
   })
-  .use("/api/v1/service-users", routes.useRouter())
+  .use("/api/v1", routes.useRouter())
   .listen(port, (): void => {
     console.log(`Server Running Port: ${port}`);
   });

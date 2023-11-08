@@ -1,8 +1,8 @@
-enum Role {
+enum IRole {
   ADMIN = 'admin',
   TEACHER = 'teacher',
   STUDENT = 'student',
   PARENT = 'parent',
 }
 
-export default Role;
+export default IRole;
