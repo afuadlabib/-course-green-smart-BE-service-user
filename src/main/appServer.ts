@@ -6,20 +6,20 @@ import ConfigAppContext from "./config/configAppContext";
 import DataBaseRepository from "./repositories/dataBaseRepository";
 import { ServerResponse, IncomingMessage, Server } from "http";
 import Routes from "./routes/routes";
+import { platform } from "os";
 
 
 export default class AppServer{
-  protected static app: Express = ConfigAppContext.app;
+  private static app: Express = ConfigAppContext.app;
 
-  protected static port: number = ConfigAppContext.port;
+  private static port: number = ConfigAppContext.port;
 
-  protected static db: DataBaseRepository = ConfigAppContext.createDatabaseRepository();
+  private static db: DataBaseRepository = ConfigAppContext.createDatabaseRepository();
 
-  protected static routes: Routes =  ConfigAppContext.createRouter();
-
+  private static routes: Routes =  ConfigAppContext.createRoutes();
 
   public static run(): Server<typeof IncomingMessage, typeof ServerResponse>{
-    
+
     console.log("Connecting database ...");
     this.db.connect()
     console.log("Connect database successfully");
@@ -34,7 +34,7 @@ export default class AppServer{
                 })
                 .use("/api/v1", this.routes.useRouter())
                 .listen(this.port, (): void => {
-                  console.log(`Server Running Port: ${this.port}`);
+                  console.log(`Server Running: ${platform} Port: ${this.port}`);
                 });
     
   }

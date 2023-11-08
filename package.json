@@ -3,6 +3,23 @@
   "description": "",
   "version": "1.0.0",
   "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ./src/main/index.ts",
+    "build": "rm -rf build/ && tsc -p . -w",
+    "start": "node ./build/main/index.js",
+    "seeder": "node ./build/main/seeders/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/afuadlabib/course-green-smart-BE-service-user.git"
+  },
+  "keywords": [],
+  "author": "Ahmad Fuad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/afuadlabib/course-green-smart-BE-service-user/issues"
+  },
+  "homepage": "https://github.com/afuadlabib/course-green-smart-BE-service-user#readme",
   "dependencies": {
     "acorn": "^8.11.2",
     "acorn-walk": "^8.3.0",
@@ -23,22 +40,8 @@
     "v8-compile-cache-lib": "^3.0.1",
     "yn": "^3.1.1"
   },
-  "scripts": {
-    "dev": "nodemon src/main/index.ts"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/afuadlabib/course-green-smart-BE-service-user.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/afuadlabib/course-green-smart-BE-service-user/issues"
-  },
-  "homepage": "https://github.com/afuadlabib/course-green-smart-BE-service-user#readme",
   "devDependencies": {
-    "@types/bcrypt": "^5.0.1",
+    "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.15",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.20",

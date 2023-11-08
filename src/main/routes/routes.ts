@@ -2,18 +2,12 @@ import { Router } from "express";
 import UserRouter from "./userRouter";
 import ConfigAppContext from "../config/configAppContext";
 
-interface IRoutes {
-  router: Router;
-  userRouter: UserRouter;
-  useRouter(): Router;
-}
+export default class Routes{
+  router : Router= Router();
 
-export default class Routes implements IRoutes {
-  router = Router();
+  userRouter: UserRouter = ConfigAppContext.createUserRouter()
 
-  userRouter = ConfigAppContext.createUserRouter()
-
-  useRouter(): Router {
+  public useRouter(): Router {
     return this.router.use("/users", this.userRouter.useRouter());
   }
 }

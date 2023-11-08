@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import ConfigAppContext from "../config/configAppContext";
 
 interface IDataBaseRepository {
   dbUrl: string;
@@ -13,7 +12,7 @@ export default class DataBaseRepository implements IDataBaseRepository {
     this.dbUrl = dbUrl;
   }
 
-  connect() {
+  public connect() {
     return mongoose.connect(this.dbUrl);
   }
 }

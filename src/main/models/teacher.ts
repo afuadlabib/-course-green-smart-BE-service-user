@@ -1,6 +1,4 @@
-import { Schema, model, Model } from "mongoose";
 import IHistory from "./history";
-import TeacherSchema from "./schemas/TeacherSchema";
 
 export interface ITeacher extends IHistory {
   userId: bigint;
@@ -8,12 +6,11 @@ export interface ITeacher extends IHistory {
   courses: bigint[];
 }
 
-export class Teacher{
-  teachers = new Schema<ITeacher>(TeacherSchema);
-
-  getTeacher() : Model<any, any> {
-  return model('teachers', this.teachers )
-  }
+export const TeacherSchema = {
+  userId: { type: Number },
+  fullname: {type: String, required: true},
+  courses: {type: Array, required: true},
+  isDeleted: { type: String, required: true },
+  createdBy: { type: String, required: true },
+  deletedBy: { type: Boolean, required: true },
 }
-
-export default new Teacher();

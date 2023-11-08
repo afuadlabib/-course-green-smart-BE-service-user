@@ -14,11 +14,9 @@ export default class ConfigAppContext {
     
     static dbUrl = <string> process.env.MONGODB_URL;
     
-    public static createServer(): Express {
-        return this.app
-    }
+    static Screat = <string> process.env.SECREAT;
 
-    public static createRouter(): Routes {
+    public static createRoutes(): Routes {
         return new Routes()
     }
 

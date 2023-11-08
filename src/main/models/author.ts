@@ -1,6 +1,4 @@
-import { Model, Schema, model } from "mongoose";
 import IHistory from "./history";
-import AuthorSchema from "./schemas/AuthorSchema";
 
 export interface IAuthor extends IHistory {
   name: string;
@@ -8,11 +6,10 @@ export interface IAuthor extends IHistory {
 }
 
 
-export default class Author{
-  
-  getAuthor(): Model<any, any> {
-    const authors = new Schema<IAuthor>(AuthorSchema)
-    return model('authors', authors)
-  }
+export const AuthorSchema = {
+  name: { type: String, required: true },
+  userId: { type: Number },
+  isDeleted: { type: String, required: true },
+  createdBy: { type: String, required: true },
+  deletedBy: { type: Boolean, required: true },
 }
-

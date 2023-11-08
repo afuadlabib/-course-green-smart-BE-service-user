@@ -1,7 +1,5 @@
 import IRole from "./role";
 import IHistory from "./history";
-import { Schema, model, Model } from "mongoose"
-import UserSchema from "./schemas/UserSchema";
 
 export default interface IUser extends IHistory {
   username: string;
@@ -13,4 +11,15 @@ export default interface IUser extends IHistory {
   address: string;
 }
   
-// export default model('users', new Schema<IUser>(UserSchema))
+export const UserSchema = {
+  username: {type: String, required: true},
+  email: {type: String, required: true},
+  password: {type: String, required: true},
+  role: {type: String, enum: Object.values(IRole),required: true},
+  birthDay: {type: String, required: true},
+  imageUrl: {type: String, required: true},
+  address: {type: String, required: true},
+  isDeleted: { type: Boolean, required: true },
+  createdBy: { type: String, required: true },
+  deletedBy: { type: String, required: true },
+}
