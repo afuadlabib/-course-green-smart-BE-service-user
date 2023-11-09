@@ -2,7 +2,7 @@ import DataBaseRepository from "../repositories/dataBaseRepository";
 import { configDotenv } from "dotenv";
 import UserService from "../services/userService";
 import Encrypt from "../utils/ecrypt";
-import IRole from "../models/role";
+import IRole from "../schemas/role";
 
 configDotenv();
 

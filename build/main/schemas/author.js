@@ -4,7 +4,7 @@ exports.AuthorSchema = void 0;
 exports.AuthorSchema = {
     name: { type: String, required: true },
     userId: { type: Number },
-    isDeleted: { type: String, required: true },
+    isDeleted: { type: Boolean, required: true },
     createdBy: { type: String, required: true },
-    deletedBy: { type: Boolean, required: true },
+    deletedBy: { type: String, required: true },
 };

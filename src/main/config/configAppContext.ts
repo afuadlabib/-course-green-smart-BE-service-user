@@ -3,8 +3,9 @@ import { configDotenv } from "dotenv";
 import DataBaseRepository from "../repositories/dataBaseRepository";
 import Routes from "../routes/routes";
 import UserRouter from "../routes/userRouter";
-import UserController from "../controllers/userController";
-import GenerateToken from "../utils/token";
+import AuthController from "../controllers/userController";
+import Token from "../utils/token";
+import Middleware from "../middlewares/middleware";
 
 configDotenv()
 
@@ -25,16 +26,20 @@ export default class ConfigAppContext {
         return new UserRouter()
     }
 
-    public static createDatabaseRepository(){
+    public static createDatabaseRepository(): DataBaseRepository{
         return new DataBaseRepository(this.dbUrl)
     }
 
-    public static createUserController(){
-        return new UserController()
+    public static createUserController(): AuthController{
+        return new AuthController()
     }
 
-    public static createGenerateToken(){
-        return new GenerateToken()
+    public static createToken(): Token{
+        return new Token()
+    }
+
+    public static createMiddleware(): Middleware{
+        return new Middleware()
     }
 
 }

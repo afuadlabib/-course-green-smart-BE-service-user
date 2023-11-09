@@ -1,6 +1,6 @@
 import { FilterQuery, Model, Query, model } from "mongoose";
 import { Schema } from "mongoose";
-import IUser, { UserSchema } from "../models/user";
+import IUser, { UserSchema } from "../schemas/user";
 import IService from "./Service";
 
 export default class UserService implements IService{
@@ -19,6 +19,10 @@ export default class UserService implements IService{
     public static findOne(filterQuery: FilterQuery<any>): Query<any, any> {
         return this.User.findOne(filterQuery);
 
+    }
+
+    public static findById(id: string){
+        return this.User.findById(id);
     }
 
 

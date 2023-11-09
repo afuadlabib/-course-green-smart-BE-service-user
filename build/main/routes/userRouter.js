@@ -11,7 +11,16 @@ class UserRouter {
         this.userController = configAppContext_1.default.createUserController();
     }
     useRouter() {
-        return this.router.get("/", this.userController.find);
+        return this.router
+            .get("/", (req, res) => {
+            this.userController.find(req, res);
+        })
+            .post("/login", (req, res) => {
+            this.userController.login(req, res);
+        })
+            .post("/register", (req, res) => {
+            this.userController.register(req, res);
+        });
     }
 }
 exports.default = UserRouter;

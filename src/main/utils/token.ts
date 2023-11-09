@@ -1,7 +1,7 @@
 import JsonWebToken from 'jsonwebtoken'
 import ConfigAppContext from '../config/configAppContext';
 
-export default class GenerateToken{
+export default class Token{
 
     public static createToken(payload: object): string{
         return JsonWebToken.sign({...payload}, ConfigAppContext.Screat)

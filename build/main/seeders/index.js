@@ -15,11 +15,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dataBaseRepository_1 = __importDefault(require("../repositories/dataBaseRepository"));
 const dotenv_1 = require("dotenv");
 const userService_1 = __importDefault(require("../services/userService"));
-const bcrypt_1 = __importDefault(require("../utils/bcrypt"));
-const role_1 = __importDefault(require("../models/role"));
+const ecrypt_1 = __importDefault(require("../utils/ecrypt"));
+const role_1 = __importDefault(require("../schemas/role"));
 (0, dotenv_1.configDotenv)();
 const database = new dataBaseRepository_1.default(process.env.MONGODB_URL);
-const pass = bcrypt_1.default.hash("admin");
+const pass = ecrypt_1.default.hash("admin");
 database.connect();
 const admin = {
     username: "admin",

@@ -19,7 +19,7 @@ export const UserSchema = {
   birthDay: {type: String, required: true},
   imageUrl: {type: String, required: true},
   address: {type: String, required: true},
-  isDeleted: { type: Boolean, required: true },
-  createdBy: { type: String, required: true },
-  deletedBy: { type: String, required: true },
+  isDeleted: { type: Boolean },
+  createdBy: { type: String },
+  deletedBy: { type: String },
 }

@@ -8,7 +8,6 @@ import { ServerResponse, IncomingMessage, Server } from "http";
 import Routes from "./routes/routes";
 import { platform } from "os";
 
-
 export default class AppServer{
   private static app: Express = ConfigAppContext.app;
 
@@ -19,12 +18,6 @@ export default class AppServer{
   private static routes: Routes =  ConfigAppContext.createRoutes();
 
   public static run(): Server<typeof IncomingMessage, typeof ServerResponse>{
-
-    console.log("Connecting database ...");
-
-    this.db.connect();
-
-    console.log("Connect database successfully");
 
     return this.app
     
@@ -44,7 +37,13 @@ export default class AppServer{
                 .use("/api/v1", this.routes.useRouter())
 
                 .listen(this.port, (): void => {
-                  console.log(`Server Running: ${platform} Port: ${this.port}`);
+                  console.log(`[${new Date()}]: Server Running ${platform} Port ${this.port}`);
+
+                  console.log(`[${new Date()}]: Connecting database ...`);
+
+                  this.db.connect();
+
+                  console.log(`[${new Date()}]: Connect database successfully`);
 
                 });
     

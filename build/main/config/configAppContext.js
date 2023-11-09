@@ -9,6 +9,7 @@ const dataBaseRepository_1 = __importDefault(require("../repositories/dataBaseRe
 const routes_1 = __importDefault(require("../routes/routes"));
 const userRouter_1 = __importDefault(require("../routes/userRouter"));
 const userController_1 = __importDefault(require("../controllers/userController"));
+const token_1 = __importDefault(require("../utils/token"));
 (0, dotenv_1.configDotenv)();
 class ConfigAppContext {
     static createRoutes() {
@@ -22,6 +23,9 @@ class ConfigAppContext {
     }
     static createUserController() {
         return new userController_1.default();
+    }
+    static createGenerateToken() {
+        return new token_1.default();
     }
 }
 ConfigAppContext.app = (0, express_1.default)();
