@@ -2,11 +2,12 @@ import { NextFunction, Request, Response } from "express"
 import UserService from "../services/userService";
 import Token from "../utils/token";
 import Encrypt from "../utils/ecrypt";
-import { Types } from "mongoose";
-import { error } from "console";
+
 export default class AuthController{
+
+    constructor(){}
     
-    public async login(req: Request, res: Response, next: NextFunction){
+    public async login(req: Request, res: Response, next: NextFunction): Promise< Response | undefined | NextFunction >{
         try {
             const filter: any = {}
 
@@ -16,13 +17,9 @@ export default class AuthController{
             
             const data = await UserService.findOne(filter);
 
-            if(!data) {
-                return res.status(400).json({ error: "Invalid email/username/password" })
+            if(!data) throw new TypeError("Invalid email/username/password")
 
-            } else if (!Encrypt.compare(req.body.password, data.password)){
-                return res.status(400).json({ error: "Invalid email/username/password" })
-
-            }
+             else if (!Encrypt.compare(req.body.password, data.password)) throw new TypeError("Invalid email/username/password")
             
             const token: string = Token.createToken({ id: data._id })
 
@@ -34,13 +31,13 @@ export default class AuthController{
         }
     }
 
-    public async register(req: Request, res: Response, next: NextFunction) {
+    public async register(req: Request, res: Response, next: NextFunction): Promise< Response | undefined | NextFunction > {
         try {
             const data: any = await UserService.create({ ...req.body })
 
             const token: string = Token.createToken({ id: data._id })
 
-            return res.status(200).json({ token, data })
+            return res.status(201).json({ token, data })
 
         } catch (error) {
 
@@ -49,7 +46,7 @@ export default class AuthController{
         }
     }
 
-    public async find(req: Request, res: Response, next: NextFunction) {
+    public async find(req: Request, res: Response, next: NextFunction): Promise< Response | undefined | NextFunction> {
         try {
             const data: object = await UserService.find()
 
@@ -62,11 +59,13 @@ export default class AuthController{
         }
     }
 
-    public async findOne(req: Request, res: Response, next: NextFunction){
+    public async findById(req: Request, res: Response, next: NextFunction): Promise< Response | undefined | NextFunction >{
         try{
             
             const data: object = await UserService.findById(req.params.id);
+
             if(!data) throw new TypeError("User not found")
+
             return res.status(200).json(data)
 
         } catch (error){

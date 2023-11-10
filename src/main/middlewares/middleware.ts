@@ -4,7 +4,9 @@ import UserService from "../services/userService";
 
 export default class Middleware{
 
-    useAuth(req: Request, res: Response, next: NextFunction):  Response | void {
+    constructor(){}
+
+    public useAuth(req: Request, res: Response, next: NextFunction):  Response | void {
         
         try {
             const authorization: string | undefined = req.headers.authorization;
@@ -27,25 +29,36 @@ export default class Middleware{
         }
     }
 
-    useErrorHandler(err: Error, req: Request, res: Response, next: NextFunction): Response {
-
+    public useErrorHandler(err: Error, req: Request, res: Response, next: NextFunction): Response {
         let status: number;
 
         let error: any = { error: err.message }
 
         switch(err.message){
+            case "Invalid email/username/password":           
+                status = 400;
+                break;
+
             case "JsonWebTokenError":
+
+            case "invalid signature":
+
             case "UnAuthorized":
-                status = 401
-                return res.status(status).json( error );
+                status = 401;
+                break;
+
             case "User not found":
-                status = 404
-                return res.status(status).json( error );
+
+            case "Author not found":
+                status = 404;
+                break;
 
             default:
-                status = 500
-                error = { error: "Internal server error" }
-                return res.status(status).json( error )
+                error = { error: "Internal server error" };
+
+                status = 500;                
         }
+
+        return res.status(status).json( error )
     }
 }

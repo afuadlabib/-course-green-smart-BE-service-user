@@ -2,20 +2,22 @@ import express, { Express, Request, Response } from "express";
 import morgan from "morgan";
 import cors from "cors";
 import bodyParser from "body-parser";
-import ConfigAppContext from "./config/configAppContext";
+import AppContext from "./config/appContext";
 import DataBaseRepository from "./repositories/dataBaseRepository";
 import { ServerResponse, IncomingMessage, Server } from "http";
 import Routes from "./routes/routes";
 import { platform } from "os";
 
 export default class AppServer{
-  private static app: Express = ConfigAppContext.app;
+  private static app: Express = AppContext.app;
 
-  private static port: number = ConfigAppContext.port;
+  private static port: number = AppContext.port;
 
-  private static db: DataBaseRepository = ConfigAppContext.createDatabaseRepository();
+  private static db: DataBaseRepository = AppContext.createDatabaseRepository();
 
-  private static routes: Routes =  ConfigAppContext.createRoutes();
+  private static routes: Routes =  AppContext.createRoutes();
+
+  constructor(){}
 
   public static run(): Server<typeof IncomingMessage, typeof ServerResponse>{
 

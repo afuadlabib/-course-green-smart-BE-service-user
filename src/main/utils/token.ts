@@ -1,14 +1,14 @@
 import JsonWebToken from 'jsonwebtoken'
-import ConfigAppContext from '../config/configAppContext';
+import AppContext from '../config/appContext';
 
 export default class Token{
 
     public static createToken(payload: object): string{
-        return JsonWebToken.sign({...payload}, ConfigAppContext.Screat)
+        return JsonWebToken.sign({...payload}, AppContext.Screat)
     }
 
     public static compareToken(token: string){
-        return JsonWebToken.verify(token, ConfigAppContext.Screat)
+        return JsonWebToken.verify(token, AppContext.Screat)
     }
 
 }

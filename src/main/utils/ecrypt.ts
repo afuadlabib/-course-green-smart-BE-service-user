@@ -1,7 +1,11 @@
 import bcrypt from 'bcrypt'
 
 export default class Encrypt{
-    private static salt = bcrypt.genSaltSync(10);
+    private static salt: string = bcrypt.genSaltSync(10); 
+
+    constructor(){
+        
+    }
 
     public static hash(password: string){
         return bcrypt.hashSync(password, this.salt);
