@@ -1,3 +1,13 @@
 import AppServer from "./appServer";
+import IUser from "./schemas/user";
 
-AppServer.run()
+declare global {
+    namespace Express {
+        interface Request {
+            currentUser?: IUser
+        }
+    }
+}
+
+
+AppServer.run();

@@ -1,4 +1,4 @@
-import express from "express" 
+import express from "express";
 import { configDotenv } from "dotenv";
 import DataBaseRepository from "../repositories/dataBaseRepository";
 import Routes from "../routes/routes";
@@ -14,70 +14,68 @@ import TeacherController from "../controllers/teacherController";
 import TeacherRouter from "../routes/teacherRouter";
 import StudentRouter from "../routes/studentRouter";
 
-configDotenv()
+configDotenv();
 
 export default class AppContext {
-    static app = express();
+  static app = express();
 
-    static port = parseInt(<string>process.env.PORT);
-    
-    static dbUrl = <string> process.env.MONGODB_URL;
-    
-    static Screat = <string> process.env.SECREAT;
+  static port = parseInt(<string>process.env.PORT);
 
-    constructor(){}
+  static dbUrl = <string>process.env.MONGODB_URL;
 
-    public static createRoutes(): Routes {
-        return new Routes();
-    }
+  static Screat = <string>process.env.SECREAT;
 
-    public static createUserRouter(): AuthRouter {
-        return new AuthRouter();
-    }
+  constructor() {}
 
-    public static createDatabaseRepository(): DataBaseRepository{
-        return new DataBaseRepository(this.dbUrl);
-    }
+  public static createRoutes(): Routes {
+    return new Routes();
+  }
 
-    public static createUserController(): AuthController{
-        return new AuthController();
-    }
+  public static createUserRouter(): AuthRouter {
+    return new AuthRouter();
+  }
 
-    public static createMiddleware(): Middleware{
-        return new Middleware();
-    }
+  public static createDatabaseRepository(): DataBaseRepository {
+    return new DataBaseRepository(this.dbUrl);
+  }
 
-    public static createEncrypt(): Encrypt{
-        return new Encrypt();
-    }
+  public static createUserController(): AuthController {
+    return new AuthController();
+  }
 
-    public static createToken(): Token{
-        return new Token();
-    }
+  public static createMiddleware(): Middleware {
+    return new Middleware();
+  }
 
-    public static createAuthorController(): AuthorController{
-        return new AuthorController();
+  public static createEncrypt(): Encrypt {
+    return new Encrypt();
+  }
 
-    }
+  public static createToken(): Token {
+    return new Token();
+  }
 
-    public static createAuthorRouter(): AuthorRouter{
-        return new AuthorRouter();
-    }
+  public static createAuthorController(): AuthorController {
+    return new AuthorController();
+  }
 
-    public static createStudentController(): StudentController{
-        return new StudentController();
-    }
+  public static createAuthorRouter(): AuthorRouter {
+    return new AuthorRouter();
+  }
 
-    public static createStudentRouter(): StudentRouter{
-        return new StudentRouter();
-    }
+  public static createStudentController(): StudentController {
+    return new StudentController();
+  }
 
-    public static createTeacherController(): TeacherController{
-        return new TeacherController();
-    }
+  public static createStudentRouter(): StudentRouter {
+    return new StudentRouter();
+  }
 
-    public static createTeacherRouter(): TeacherRouter{
-        return new TeacherRouter();
-    }
+  public static createTeacherController(): TeacherController {
+    return new TeacherController();
+  }
 
+  public static createTeacherRouter(): TeacherRouter {
+    return new TeacherRouter();
+  }
 }

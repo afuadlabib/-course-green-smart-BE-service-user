@@ -1,73 +1,94 @@
 import { NextFunction, Request, Response } from "express";
 import AuthorService from "../services/authorService";
 
-export default class AuthorController{
+export default class AuthorController {
+  constructor() {}
 
-    constructor(){
+  public async find(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response | undefined | NextFunction> {
+    try {
+      const data = await AuthorService.find();
 
+      return res.status(200).json(data);
+    } catch (error) {
+      next(error);
     }
+  }
 
-    public async find(req: Request, res: Response, next: NextFunction): Promise<Response | undefined | NextFunction>{
-        try {
-            const data = await AuthorService.find();
+  public async create(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response | undefined | NextFunction> {
+    try {
+      const data = await AuthorService.create({
+        ...req.body,
+        userId: req.currentUser?._id,
+        createdBy: req.currentUser?._id,
+      });
 
-            return res.status(200).json(data);
-        } catch (error) {
-            next(error);
-        }
+      return res.status(201).json(data);
+    } catch (error) {
+      next(error);
     }
+  }
 
-    public async create(req: Request, res: Response, next: NextFunction): Promise<Response | undefined | NextFunction>{
-        try {
-            const data = await AuthorService.create({...req.body});
+  public async findById(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response | undefined | NextFunction> {
+    try {
+      const data = await AuthorService.findById(req.params.id);
+      if (!data) throw new TypeError("Author not found");
 
-            return res.status(201).json(data);
-        } catch (error) {
-            next(error);
-
-        }
-
+      return res.status(200).json(data);
+    } catch (error) {
+      next(error);
     }
+  }
 
-    public async findById(req: Request, res: Response, next: NextFunction): Promise<Response | undefined | NextFunction>{
-        try {
-            const data = AuthorService.findById(req.body.id)
+  public async updateOne(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response | undefined | NextFunction> {
+    try {
+      const findAuthor = await AuthorService.findOne({ _id: req.params.id });
 
-            if(!data) throw new TypeError("Author not found")
+      if (!findAuthor) throw new TypeError("Author not found");
 
-            return res.status(200).json(data)
-        } catch (error) {
-            next(error)
-        }
+      const data = await AuthorService.updateOne(
+        { _id: findAuthor._id },
+        { ...req.body }
+      );
+
+      return res.status(200).json(data);
+    } catch (error) {
+      next(error);
     }
+  }
 
-    public async updateOne(req: Request, res: Response, next: NextFunction): Promise<Response | undefined | NextFunction>{
-        try {
-            const findAuthor = await AuthorService.findOne({id: req.params.id });
+  public async delete(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response | undefined | NextFunction> {
+    try {
+      const findAuthor = await AuthorService.findOne({ _id: req.params.id });
 
-            if(!findAuthor) throw new TypeError("Author not found");
-    
-            const data = await AuthorService.updateOne({_id: findAuthor._id}, {...req.body});
-            
-            return res.status(200).json(data);
+      if (!findAuthor) throw new TypeError("Author not found");
 
-        } catch (error) {
-            next(error)
-        }
+      const deletedAuthor = await AuthorService.deleteOne({
+        _id: findAuthor._id,
+      });
+
+      return res.status(200).json(deletedAuthor);
+    } catch (error) {
+      next(error);
     }
-
-    public async delete(req: Request, res: Response, next: NextFunction): Promise<Response | undefined | NextFunction>{
-        try {
-            const findAuthor = await AuthorService.findOne({id: req.params.id });
-
-            if(!findAuthor) throw new TypeError("Author not found");
-    
-            const deletedAuthor = await AuthorService.deleteOne({_id: findAuthor._id});
-            
-            return res.status(200).json(deletedAuthor)
-        } catch (error) {
-            next(error)
-        }
-        
-    }
+  }
 }

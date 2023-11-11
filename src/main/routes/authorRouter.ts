@@ -1,32 +1,28 @@
-import { Router } from "express"
+import { Router } from "express";
 import AuthorController from "../controllers/authorController";
 import AppContext from "../config/appContext";
 
-export default class AuthorRouter{
-    private router: Router;
+export default class AuthorRouter {
+  private router: Router;
 
-    private authorController: AuthorController;
+  private authorController: AuthorController;
 
-    constructor(){
-        this.router = Router();
+  constructor() {
+    this.router = Router();
 
-        this.authorController = AppContext.createAuthorController();
+    this.authorController = AppContext.createAuthorController();
+  }
 
-    }
+  public useRouter(): Router {
+    return this.router
+      .get("/", this.authorController.find)
 
-    public useRouter(): Router{
-        return this.router
-                        .get("/", this.authorController.find)
+      .post("/", this.authorController.create)
 
-                        .post("/", this.authorController.create)
+      .put("/:id", this.authorController.updateOne)
 
-                        .put("/:id", this.authorController.updateOne)
+      .get("/:id", this.authorController.findById)
 
-                        .get("/:id", this.authorController.findById)
-
-                        .delete("/:id", this.authorController.delete)
-
-    }
-
-
+      .delete("/:id", this.authorController.delete);
+  }
 }

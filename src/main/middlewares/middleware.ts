@@ -1,64 +1,91 @@
 import { NextFunction, Request, Response } from "express";
 import Token from "../utils/token";
 import UserService from "../services/userService";
+import IUser from "../schemas/user";
 
-export default class Middleware{
 
-    constructor(){}
+export default class Middleware {
+  constructor() {}
 
-    public useAuth(req: Request, res: Response, next: NextFunction):  Response | void {
-        
-        try {
-            const authorization: string | undefined = req.headers.authorization;
+  public async useAuth(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response | void> {
+    try {
+      const authorization: string | undefined = req.headers.authorization;
 
-            if(!authorization) throw new TypeError("JsonWebTokenError");
+      if (!authorization) throw new TypeError("JsonWebTokenError");
 
-            const [bearer, token] : string[] | undefined = authorization.split(" ");
+      const [bearer, token]: string[] | undefined = authorization.split(" ");
 
-            const payload : any = Token.compareToken(token);
+      const payload: any = Token.compareToken(token);
 
-            const findUser = UserService.findById(payload.id)
+      const findUser: any = await UserService.findById(payload.id);
 
-            if(!findUser) throw new TypeError("UnAuthorized");
+      if (!findUser) throw new TypeError("UnAuthorized");
 
-            next()
+      req.currentUser = findUser
 
-        } catch (error) {
-            next(error);
+      next();
+    } catch (error) {
+      next(error);
+    }
+  }
 
-        }
+  public useErrorHandler(
+    err: Error | any,
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Response {
+    let status: number;
+
+    let errorData: any = {
+        name: err.name,
+        message: err.message
+    };
+
+    if (err.errors) {
+      err.message = "ValidatorError";
+      let errors: any[] = [];
+      for (let e in err.errors) {
+        errors.push(err.errors[e].message);
+      }
+
+      errorData.errors = errors
     }
 
-    public useErrorHandler(err: Error, req: Request, res: Response, next: NextFunction): Response {
-        let status: number;
+    switch (err.message) {
+      case "Invalid email/username/password":
+      case "ValidatorError":
+        status = 400;
+        break;
 
-        let error: any = { error: err.message }
+      case "JsonWebTokenError":
 
-        switch(err.message){
-            case "Invalid email/username/password":           
-                status = 400;
-                break;
+      case "invalid signature":
 
-            case "JsonWebTokenError":
+      case "UnAuthorized":
+        status = 401;
+        break;
 
-            case "invalid signature":
+      case "User not found":
 
-            case "UnAuthorized":
-                status = 401;
-                break;
+      case "Student not found":
 
-            case "User not found":
+      case "Author not found":
 
-            case "Author not found":
-                status = 404;
-                break;
+      case "Teacher not found":
+        status = 404;
+        break;
 
-            default:
-                error = { error: "Internal server error" };
+      default:
+        errorData = { error: "Internal server error" };
 
-                status = 500;                
-        }
-
-        return res.status(status).json( error )
+        status = 500;
     }
+
+    return res.status(status).json({...errorData});
+  }
 }

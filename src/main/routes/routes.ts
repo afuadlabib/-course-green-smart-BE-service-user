@@ -6,7 +6,7 @@ import AuthorRouter from "./authorRouter";
 import TeacherRouter from "./teacherRouter";
 import StudentRouter from "./studentRouter";
 
-export default class Routes{
+export default class Routes {
   private router: Router;
 
   private userRouter: AuthRouter;
@@ -16,40 +16,35 @@ export default class Routes{
   private authorRouter: AuthorRouter;
 
   private teacherRouter: TeacherRouter;
-  
+
   private studentRouter: StudentRouter;
 
-  constructor(){
-  this.router = Router();
+  constructor() {
+    this.router = Router();
 
-  this.userRouter = AppContext.createUserRouter();
+    this.userRouter = AppContext.createUserRouter();
 
-  this.middleware = AppContext.createMiddleware();
+    this.middleware = AppContext.createMiddleware();
 
-  this.authorRouter = AppContext.createAuthorRouter();
+    this.authorRouter = AppContext.createAuthorRouter();
 
-  this.teacherRouter = AppContext.createTeacherRouter();
+    this.teacherRouter = AppContext.createTeacherRouter();
 
-  this.studentRouter = AppContext.createStudentRouter();
-
+    this.studentRouter = AppContext.createStudentRouter();
   }
 
   public useRouter(): Router {
-    
     return this.router
-                  .use("/auths", this.userRouter.useRouter())
+      .use("/auths", this.userRouter.useRouter())
 
-                  .use(this.middleware.useAuth)
+      .use(this.middleware.useAuth)
 
-                  .use("/students", this.studentRouter.useRouter())
+      .use("/students", this.studentRouter.useRouter())
 
-                  .use("/teachers", this.teacherRouter.useRouter())
+      .use("/teachers", this.teacherRouter.useRouter())
 
-                  .use("/authors", this.authorRouter.useRouter() )
+      .use("/authors", this.authorRouter.useRouter())
 
-                  .use(this.middleware.useErrorHandler)
-
-
+      .use(this.middleware.useErrorHandler);
   }
 }
-
