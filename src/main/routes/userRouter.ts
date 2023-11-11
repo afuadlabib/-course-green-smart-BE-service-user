@@ -1,21 +1,32 @@
-import { Router } from "express"
-import ConfigAppContext from "../config/configAppContext";
+import { Router } from "express";
+import AppContext from "../config/appContext";
+import AuthController from "../controllers/authController";
+import Middleware from "../middlewares/middleware";
 
-export default class UserRouter{
-   private router = Router();
+export default class AuthRouter {
+  private router: Router;
 
-   private userController = ConfigAppContext.createUserController();
+  private authController: AuthController;
 
-   private middleware = ConfigAppContext.createMiddleware();
+  private middleware: Middleware;
 
-   public useRouter(){
-      return this.router
-                        .get("/", this.userController.find)
+  constructor() {
+    this.router = Router();
 
-                        .post("/login", this.userController.login)
-                        
-                        .post("/register", this.userController.register)
+    this.authController = AppContext.createUserController();
 
-                        .get("/:id", this.middleware.useAuth, this.userController.findOne)
-   }
+    this.middleware = AppContext.createMiddleware();
+  }
+
+  public useRouter() {
+    return this.router
+
+      .post("/login", this.authController.login)
+
+      .post("/register", this.authController.register)
+
+      .get("/:id", this.middleware.useAuth, this.authController.findById)
+
+      .get("/", this.authController.find);
+  }
 }

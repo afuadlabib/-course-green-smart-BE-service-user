@@ -1,14 +1,12 @@
-import JsonWebToken from 'jsonwebtoken'
-import ConfigAppContext from '../config/configAppContext';
+import JsonWebToken from "jsonwebtoken";
+import AppContext from "../config/appContext";
 
-export default class Token{
+export default class Token {
+  public static createToken(payload: object): string {
+    return JsonWebToken.sign({ ...payload }, AppContext.Screat);
+  }
 
-    public static createToken(payload: object): string{
-        return JsonWebToken.sign({...payload}, ConfigAppContext.Screat)
-    }
-
-    public static compareToken(token: string){
-        return JsonWebToken.verify(token, ConfigAppContext.Screat)
-    }
-
+  public static compareToken(token: string) {
+    return JsonWebToken.verify(token, AppContext.Screat);
+  }
 }

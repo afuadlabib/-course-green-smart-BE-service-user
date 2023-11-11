@@ -2,14 +2,13 @@ import IHistory from "./history";
 
 export interface IAuthor extends IHistory {
   name: string;
-  userId: bigint;
+  userId: string;
 }
-
 
 export const AuthorSchema = {
   name: { type: String, required: true },
-  userId: { type: Number },
-  isDeleted: { type: Boolean, required: true },
-  createdBy: { type: String, required: true },
-  deletedBy: { type: String, required: true },
-}
+  userId: { type: String },
+  isDeleted: { type: Boolean, default: false},
+  createdBy: { type: String, require: true } ,
+  deletedBy: { type: String, default: "" },
+};

@@ -1,18 +1,18 @@
 import IHistory from "./history";
 
 export interface IStudent extends IHistory {
-  userId: bigint;
-  fullname: string;
-  schoolId: bigint;
-  classId: bigint;
+  userId: string;
+  fullName: string;
+  schoolId: string;
+  classId: string;
 }
 
 export const StudentSchema = {
-  userId: { type: Number },
-  fullname: {type: String, required: true},
-  schoolId: {type: Number, required: true},
-  classId: {type: Number, required: true},
-  isDeleted: { type: Boolean, required: true },
+  userId: { type: String },
+  fullName: { type: String, required: true },
+  schoolId: { type: String, required: true },
+  classId: { type: String, required: true },
+  isDeleted: { type: Boolean, default: false },
   createdBy: { type: String, required: true },
-  deletedBy: { type: String, required: true },
-}
+  deletedBy: { type: String, default: "" },
+};

@@ -2,52 +2,50 @@ import express, { Express, Request, Response } from "express";
 import morgan from "morgan";
 import cors from "cors";
 import bodyParser from "body-parser";
-import ConfigAppContext from "./config/configAppContext";
+import AppContext from "./config/appContext";
 import DataBaseRepository from "./repositories/dataBaseRepository";
 import { ServerResponse, IncomingMessage, Server } from "http";
 import Routes from "./routes/routes";
 import { platform } from "os";
 
-export default class AppServer{
-  private static app: Express = ConfigAppContext.app;
+export default class AppServer {
+  private static app: Express = AppContext.app;
 
-  private static port: number = ConfigAppContext.port;
+  private static port: number = AppContext.port;
 
-  private static db: DataBaseRepository = ConfigAppContext.createDatabaseRepository();
+  private static db: DataBaseRepository = AppContext.createDatabaseRepository();
 
-  private static routes: Routes =  ConfigAppContext.createRoutes();
+  private static routes: Routes = AppContext.createRoutes();
 
-  public static run(): Server<typeof IncomingMessage, typeof ServerResponse>{
+  constructor() {}
 
+  public static run(): Server<typeof IncomingMessage, typeof ServerResponse> {
     return this.app
-    
-                .use(cors())
 
-                .use(morgan("dev"))
+      .use(cors())
 
-                .use(bodyParser.urlencoded({ extended: true }))
+      .use(morgan("dev"))
 
-                .use(express.json({ limit: "3MB" }))
+      .use(bodyParser.urlencoded({ extended: true }))
 
-                .get("/", (req: Request, res: Response) => {
-                  res.status(200).send("Welcome To Service Users");
+      .use(express.json({ limit: "3MB" }))
 
-                })
+      .get("/", (req: Request, res: Response) => {
+        res.status(200).send("Welcome To Service Users");
+      })
 
-                .use("/api/v1", this.routes.useRouter())
+      .use("/api/v1", this.routes.useRouter())
 
-                .listen(this.port, (): void => {
-                  console.log(`[${new Date()}]: Server Running ${platform} Port ${this.port}`);
+      .listen(this.port, (): void => {
+        console.log(
+          `[${new Date()}]: Server Running ${platform} Port ${this.port}`
+        );
 
-                  console.log(`[${new Date()}]: Connecting database ...`);
+        console.log(`[${new Date()}]: Connecting database ...`);
 
-                  this.db.connect();
+        this.db.connect();
 
-                  console.log(`[${new Date()}]: Connect database successfully`);
-
-                });
-    
+        console.log(`[${new Date()}]: Connect database successfully`);
+      });
   }
-  
-
 }

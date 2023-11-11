@@ -1,29 +1,63 @@
-import { FilterQuery, Model, Query, model } from "mongoose";
+import { FilterQuery, Model, Query, UpdateQuery, model } from "mongoose";
 import { Schema } from "mongoose";
 import IUser, { UserSchema } from "../schemas/user";
 import IService from "./Service";
 
-export default class UserService implements IService{
-    private static User: Model<any, any> = model('users', new Schema <IUser>(UserSchema))
+export default class UserService implements IService {
+  private static User: Model<any, any> = model(
+    "users",
+    new Schema<IUser>(UserSchema)
+  );
 
-    public static create (doc: any): Promise<any>{
-        return this.User.create(doc);
+  constructor() {}
 
-    }
+  public static async create(doc: any): Promise<any> {
+    return this.User.create(doc);
+  }
 
-    public static find (): Query<any, any>  {
-        return this.User.find();
+  public static async find(
+    filter?: FilterQuery<any>,
+    projection?: any
+  ): Promise<Query<any, any>> {
+    return this.User.find(
+      { ...filter },
+      {
+        password: 0,
+        ...projection,
+      }
+    );
+  }
 
-    }
+  public static async findOne(
+    filter: FilterQuery<any>,
+    projection?: any
+  ): Promise<Query<any, any>> {
+    return this.User.findOne(filter, {
+      ...projection,
+    });
+  }
 
-    public static findOne(filterQuery: FilterQuery<any>): Query<any, any> {
-        return this.User.findOne(filterQuery);
+  public static async findById(
+    id: string,
+    projection?: any
+  ): Promise<Query<any, any>> {
+    return this.User.findById(id, {
+      password: 0,
+      ...projection,
+    });
+  }
 
-    }
+  public static async updateOne(
+    filter: FilterQuery<any>,
+    update: UpdateQuery<any>,
+    projection?: any
+  ): Promise<Query<any, any>> {
+    return this.User.updateOne(filter, update);
+  }
 
-    public static findById(id: string){
-        return this.User.findById(id);
-    }
-
-
+  public static async deleteOne(
+    filter: FilterQuery<any>
+  ): Promise<Query<any, any>> {
+    return this.User.deleteOne(filter);
+  }
 }
