@@ -34,7 +34,7 @@ export default class AppServer {
         res.status(200).send("Welcome To Service Users");
       })
 
-      .use("/api/v1", this.routes.useRouter())
+      .use("/api/v1/user-services", this.routes.useRouter())
 
       .listen(this.port, (): void => {
         console.log(
