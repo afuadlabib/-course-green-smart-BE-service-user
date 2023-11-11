@@ -41,7 +41,7 @@ export default class TeacherController {
     next: NextFunction
   ): Promise<Response | undefined | NextFunction> {
     try {
-      const data = await TeacherService.findById(req.body.id);
+      const data = await TeacherService.findById(req.params.id);
 
       if (!data) throw new TypeError("Teacher not found");
 
