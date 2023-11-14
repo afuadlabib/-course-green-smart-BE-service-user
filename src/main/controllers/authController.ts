@@ -36,7 +36,6 @@ export default class AuthController {
 
       return res.status(200).json({ token, data });
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }

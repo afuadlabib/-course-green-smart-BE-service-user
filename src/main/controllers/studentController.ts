@@ -44,7 +44,6 @@ export default class StudentController {
   ): Promise<Response | undefined | NextFunction> {
     try {
       const data = await StudentService.findById(req.params.id);
-      console.log(data);
       if (!data) throw new TypeError("Student not found");
 
       return res.status(200).json(data);
