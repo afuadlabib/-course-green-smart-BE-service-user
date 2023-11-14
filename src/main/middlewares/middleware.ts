@@ -1,14 +1,14 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import Token from "../utils/token";
 import UserService from "../services/userService";
-import IUser from "../schemas/user";
+import RequestRepository from "../repositories/requestRepository";
 
 
 export default class Middleware {
   constructor() {}
 
   public async useAuth(
-    req: Request,
+    req: RequestRepository,
     res: Response,
     next: NextFunction
   ): Promise<Response | void> {
@@ -35,7 +35,7 @@ export default class Middleware {
 
   public useErrorHandler(
     err: Error | any,
-    req: Request,
+    req: RequestRepository,
     res: Response,
     next: NextFunction
   ): Response {

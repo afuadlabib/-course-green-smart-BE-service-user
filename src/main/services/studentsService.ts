@@ -7,9 +7,10 @@ import {
   UpdateQuery,
 } from "mongoose";
 import { IStudent, StudentSchema } from "../schemas/student";
+import StudentRepository from "../repositories/studentRepository";
 
 export default class StudentService {
-  private static Student: Model<any, any> = model(
+  private static Student: StudentRepository = model(
     "students",
     new Schema<IStudent>(StudentSchema)
   );

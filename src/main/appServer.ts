@@ -3,17 +3,18 @@ import morgan from "morgan";
 import cors from "cors";
 import bodyParser from "body-parser";
 import AppContext from "./config/appContext";
-import DataBaseRepository from "./repositories/dataBaseRepository";
+import DataBase from "./repositories/dataBase";
 import { ServerResponse, IncomingMessage, Server } from "http";
 import Routes from "./routes/routes";
 import { platform } from "os";
+import RequestRepository from "./repositories/requestRepository";
 
 export default class AppServer {
   private static app: Express = AppContext.app;
 
   private static port: number = AppContext.port;
 
-  private static db: DataBaseRepository = AppContext.createDatabaseRepository();
+  private static db: DataBase = AppContext.createDatabaseRepository();
 
   private static routes: Routes = AppContext.createRoutes();
 
@@ -30,7 +31,7 @@ export default class AppServer {
 
       .use(express.json({ limit: "3MB" }))
 
-      .get("/", (req: Request, res: Response) => {
+      .get("/", (req: RequestRepository, res: Response) => {
         res.status(200).send("Welcome To Service Users");
       })
 

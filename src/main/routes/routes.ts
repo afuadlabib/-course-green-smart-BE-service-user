@@ -1,5 +1,5 @@
 import { Router } from "express";
-import AuthRouter from "./userRouter";
+import AuthRouter from "./authRouter";
 import AppContext from "../config/appContext";
 import Middleware from "../middlewares/middleware";
 import AuthorRouter from "./authorRouter";

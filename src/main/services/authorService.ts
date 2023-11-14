@@ -7,9 +7,10 @@ import {
   UpdateQuery,
 } from "mongoose";
 import { AuthorSchema, IAuthor } from "../schemas/author";
+import AuthorRepository from "../repositories/authorRepository";
 
 export default class AuthorService {
-  private static Author: Model<any, any> = model(
+  private static Author: AuthorRepository = model(
     "authors",
     new Schema<IAuthor>(AuthorSchema)
   );
