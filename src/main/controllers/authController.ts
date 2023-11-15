@@ -27,6 +27,7 @@ export default class AuthController {
         _id: findUser._id,
         username: findUser.username,
         email: findUser.email,
+        address: findUser.address,
         birthDay: findUser.birthDay,
         role: findUser.role,
       };
@@ -47,9 +48,17 @@ export default class AuthController {
     try {
       req.body.password = Encrypt.hash(req.body.password);
 
-      const data: any = await UserService.create({ ...req.body });
+      const createData: any = await UserService.create({ ...req.body });
 
-      const token: string = Token.createToken({ id: data._id });
+      const token: string = Token.createToken({ id: createData._id });
+
+      const data = {
+        username: createData.username,
+        email: createData.email,
+        address: createData.address,
+        birthDay: createData.birthDay,
+        role: createData.role
+      }
 
       return res.status(201).json({ token, data });
     } catch (error: any) {
