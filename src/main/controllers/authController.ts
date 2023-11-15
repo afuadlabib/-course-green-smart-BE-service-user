@@ -19,7 +19,6 @@ export default class AuthController {
       else if (req.body.email) filter.email = req.body.email;
 
       const findUser = await UserService.findOne(filter);
-      console.log(findUser);
       if (!findUser) throw new TypeError("Invalid email/username/password");
       else if (!Encrypt.compare(req.body.password, findUser.password))
         throw new TypeError("Invalid email/username/password");
@@ -46,6 +45,8 @@ export default class AuthController {
     next: NextFunction
   ): Promise<Response | undefined | NextFunction> {
     try {
+      req.body.password = Encrypt.hash(req.body.password);
+
       const data: any = await UserService.create({ ...req.body });
 
       const token: string = Token.createToken({ id: data._id });
