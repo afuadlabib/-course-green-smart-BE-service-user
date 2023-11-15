@@ -7,9 +7,11 @@ import {
   UpdateQuery,
 } from "mongoose";
 import { ITeacher, TeacherSchema } from "../schemas/teacher";
+import TeacherRepository from "../repositories/teacherRepository";
+
 
 export default class TeacherService {
-  private static Teacher: Model<any, any> = model(
+  private static Teacher: TeacherRepository = model(
     "teachers",
     new Schema<ITeacher>(TeacherSchema)
   );
@@ -17,7 +19,7 @@ export default class TeacherService {
   constructor() {}
 
   public static async create(doc: any): Promise<any> {
-    return this.Teacher.create(doc);
+    return this.Teacher.create(doc)
   }
 
   public static async find(

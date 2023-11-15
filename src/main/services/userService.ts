@@ -2,9 +2,10 @@ import { FilterQuery, Model, Query, UpdateQuery, model } from "mongoose";
 import { Schema } from "mongoose";
 import IUser, { UserSchema } from "../schemas/user";
 import IService from "./Service";
+import UserRepository from "../repositories/userRepository";
 
 export default class UserService implements IService {
-  private static User: Model<any, any> = model(
+  private static User: UserRepository = model(
     "users",
     new Schema<IUser>(UserSchema)
   );

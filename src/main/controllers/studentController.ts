@@ -1,11 +1,12 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import StudentService from "../services/studentsService";
+import RequestRepository from "../repositories/requestRepository";
 
 export default class StudentController {
   constructor() {}
 
   public async find(
-    req: Request,
+    req: RequestRepository,
     res: Response,
     next: NextFunction
   ): Promise<Response | undefined | NextFunction> {
@@ -19,7 +20,7 @@ export default class StudentController {
   }
 
   public async create(
-    req: Request,
+    req: RequestRepository,
     res: Response,
     next: NextFunction
   ): Promise<Response | undefined | NextFunction> {
@@ -37,13 +38,12 @@ export default class StudentController {
   }
 
   public async findById(
-    req: Request,
+    req: RequestRepository,
     res: Response,
     next: NextFunction
   ): Promise<Response | undefined | NextFunction> {
     try {
       const data = await StudentService.findById(req.params.id);
-      console.log(data);
       if (!data) throw new TypeError("Student not found");
 
       return res.status(200).json(data);
@@ -53,7 +53,7 @@ export default class StudentController {
   }
 
   public async updateOne(
-    req: Request,
+    req: RequestRepository,
     res: Response,
     next: NextFunction
   ): Promise<Response | undefined | NextFunction> {
@@ -74,7 +74,7 @@ export default class StudentController {
   }
 
   public async delete(
-    req: Request,
+    req: RequestRepository,
     res: Response,
     next: NextFunction
   ): Promise<Response | undefined | NextFunction> {

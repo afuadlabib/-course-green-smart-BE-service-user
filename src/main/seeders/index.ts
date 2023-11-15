@@ -1,4 +1,4 @@
-import DataBaseRepository from "../repositories/dataBaseRepository";
+import DataBase from "../repositories/dataBase";
 import { configDotenv } from "dotenv";
 import UserService from "../services/userService";
 import Encrypt from "../utils/ecrypt";
@@ -6,7 +6,7 @@ import IRole from "../schemas/role";
 
 configDotenv();
 
-const database = new DataBaseRepository(<string>process.env.MONGODB_URL);
+const database = new DataBase(<string>process.env.MONGODB_URL);
 
 const pass: string = Encrypt.hash("admin");
 

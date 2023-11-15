@@ -1,13 +1,14 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import UserService from "../services/userService";
 import Token from "../utils/token";
 import Encrypt from "../utils/ecrypt";
+import RequestRepository from "../repositories/requestRepository";
 
 export default class AuthController {
   constructor() {}
 
   public async login(
-    req: Request,
+    req: RequestRepository,
     res: Response,
     next: NextFunction
   ): Promise<Response | undefined | NextFunction> {
@@ -35,13 +36,12 @@ export default class AuthController {
 
       return res.status(200).json({ token, data });
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }
 
   public async register(
-    req: Request,
+    req: RequestRepository,
     res: Response,
     next: NextFunction
   ): Promise<Response | undefined | NextFunction> {
@@ -57,7 +57,7 @@ export default class AuthController {
   }
 
   public async find(
-    req: Request,
+    req: RequestRepository,
     res: Response,
     next: NextFunction
   ): Promise<Response | undefined | NextFunction> {
@@ -71,7 +71,7 @@ export default class AuthController {
   }
 
   public async findById(
-    req: Request,
+    req: RequestRepository,
     res: Response,
     next: NextFunction
   ): Promise<Response | undefined | NextFunction> {

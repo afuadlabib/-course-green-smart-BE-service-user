@@ -1,8 +1,8 @@
 import express from "express";
 import { configDotenv } from "dotenv";
-import DataBaseRepository from "../repositories/dataBaseRepository";
+import DataBase from "../repositories/dataBase";
 import Routes from "../routes/routes";
-import AuthRouter from "../routes/userRouter";
+import AuthRouter from "../routes/authRouter";
 import AuthController from "../controllers/authController";
 import Token from "../utils/token";
 import Middleware from "../middlewares/middleware";
@@ -16,6 +16,7 @@ import StudentRouter from "../routes/studentRouter";
 
 configDotenv();
 
+
 export default class AppContext {
   static app = express();
 
@@ -24,6 +25,8 @@ export default class AppContext {
   static dbUrl = <string>process.env.MONGODB_URL;
 
   static Screat = <string>process.env.SECREAT;
+
+
 
   constructor() {}
 
@@ -35,8 +38,8 @@ export default class AppContext {
     return new AuthRouter();
   }
 
-  public static createDatabaseRepository(): DataBaseRepository {
-    return new DataBaseRepository(this.dbUrl);
+  public static createDatabaseRepository(): DataBase {
+    return new DataBase(this.dbUrl);
   }
 
   public static createUserController(): AuthController {
@@ -78,4 +81,5 @@ export default class AppContext {
   public static createTeacherRouter(): TeacherRouter {
     return new TeacherRouter();
   }
+
 }

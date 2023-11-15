@@ -1,11 +1,12 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import AuthorService from "../services/authorService";
+import RequestRepository from "../repositories/requestRepository";
 
 export default class AuthorController {
   constructor() {}
 
   public async find(
-    req: Request,
+    req: RequestRepository,
     res: Response,
     next: NextFunction
   ): Promise<Response | undefined | NextFunction> {
@@ -19,7 +20,7 @@ export default class AuthorController {
   }
 
   public async create(
-    req: Request,
+    req: RequestRepository,
     res: Response,
     next: NextFunction
   ): Promise<Response | undefined | NextFunction> {
@@ -37,7 +38,7 @@ export default class AuthorController {
   }
 
   public async findById(
-    req: Request,
+    req: RequestRepository,
     res: Response,
     next: NextFunction
   ): Promise<Response | undefined | NextFunction> {
@@ -52,7 +53,7 @@ export default class AuthorController {
   }
 
   public async updateOne(
-    req: Request,
+    req: RequestRepository,
     res: Response,
     next: NextFunction
   ): Promise<Response | undefined | NextFunction> {
@@ -73,7 +74,7 @@ export default class AuthorController {
   }
 
   public async delete(
-    req: Request,
+    req: RequestRepository,
     res: Response,
     next: NextFunction
   ): Promise<Response | undefined | NextFunction> {

@@ -1,10 +1,11 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import TeacherService from "../services/teacherService";
+import RequestRepository from "../repositories/requestRepository";
 export default class TeacherController {
   constructor() {}
 
   public async find(
-    req: Request,
+    req: RequestRepository,
     res: Response,
     next: NextFunction
   ): Promise<Response | undefined | NextFunction> {
@@ -18,7 +19,7 @@ export default class TeacherController {
   }
 
   public async create(
-    req: Request,
+    req: RequestRepository,
     res: Response,
     next: NextFunction
   ): Promise<Response | undefined | NextFunction> {
@@ -36,7 +37,7 @@ export default class TeacherController {
   }
 
   public async findById(
-    req: Request,
+    req: RequestRepository,
     res: Response,
     next: NextFunction
   ): Promise<Response | undefined | NextFunction> {
@@ -52,7 +53,7 @@ export default class TeacherController {
   }
 
   public async updateOne(
-    req: Request,
+    req: RequestRepository,
     res: Response,
     next: NextFunction
   ): Promise<Response | undefined | NextFunction> {
@@ -73,7 +74,7 @@ export default class TeacherController {
   }
 
   public async delete(
-    req: Request,
+    req: RequestRepository,
     res: Response,
     next: NextFunction
   ): Promise<Response | undefined | NextFunction> {
