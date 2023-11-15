@@ -40,10 +40,10 @@ export default class Middleware {
     next: NextFunction
   ): Response {
     let status: number;
-
     let errorData: any = {
         name: err.name,
-        message: err.message
+        message: err.message,
+        keyValue: err.keyValue? err.keyValue: {}
     };
 
     if (err.errors) {
@@ -54,11 +54,14 @@ export default class Middleware {
       }
 
       errorData.errors = errors
+    }else if(err.name == "MongoServerError"){
+      err.message = "MongoServerError"
     }
 
     switch (err.message) {
       case "Invalid email/username/password":
       case "ValidatorError":
+      case "MongoServerError":
         status = 400;
         break;
 

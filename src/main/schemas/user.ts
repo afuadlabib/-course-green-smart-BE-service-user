@@ -14,7 +14,7 @@ export default interface IUser{
 
 export const UserSchema = {
   username: { type: String, required: true },
-  email: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: { type: String, enum: Object.values(IRole), required: true },
   birthDay: { type: String, required: true },
