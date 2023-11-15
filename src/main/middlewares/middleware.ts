@@ -33,6 +33,39 @@ export default class Middleware {
     }
   }
 
+  public async useRefreshToken(req: RequestRepository, res: Response, next: NextFunction){
+    try {
+      const authorization: string | undefined = req.headers.authorization;
+
+      if (!authorization) throw new TypeError("JsonWebTokenError");
+
+      const [bearer, token]: string[] | undefined = authorization.split(" ");
+
+      const payload: any = Token.compareToken(token);
+
+      const findUser: any = await UserService.findById(payload.id);
+
+      if (!findUser) throw new TypeError("UnAuthorized");
+
+      const newToken = Token.createToken({id: findUser.id})
+
+      const data: any = {
+        _id: findUser._id,
+        username: findUser.username,
+        email: findUser.email,
+        address: findUser.address,
+        birthDay: findUser.birthDay,
+        imageUrl: findUser.imageUrl,
+        role: findUser.role,
+      };
+
+      return res.status(200).json({token: newToken, data})
+
+    } catch (error) {
+      next(error);
+    }
+  }
+
   public useErrorHandler(
     err: Error | any,
     req: RequestRepository,
