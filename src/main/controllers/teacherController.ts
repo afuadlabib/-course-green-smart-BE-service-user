@@ -12,7 +12,7 @@ export default class TeacherController {
     try {
       const data = await TeacherService.find();
 
-      return res.status(200).json(data);
+      return res.status(200).json({data});
     } catch (error) {
       next(error);
     }
@@ -30,7 +30,7 @@ export default class TeacherController {
         createdBy: req.currentUser?._id,
       });
 
-      return res.status(201).json(data);
+      return res.status(201).json({data});
     } catch (error) {
       next(error);
     }
@@ -46,7 +46,7 @@ export default class TeacherController {
 
       if (!data) throw new TypeError("Teacher not found");
 
-      return res.status(200).json(data);
+      return res.status(200).json({data});
     } catch (error) {
       next(error);
     }
@@ -67,7 +67,7 @@ export default class TeacherController {
         { ...req.body }
       );
 
-      return res.status(200).json(data);
+      return res.status(200).json({data});
     } catch (error) {
       next(error);
     }
@@ -87,7 +87,7 @@ export default class TeacherController {
         _id: findTeacher._id,
       });
 
-      return res.status(200).json(deletedTeacher);
+      return res.status(200).json({data: deletedTeacher});
     } catch (error) {
       next(error);
     }

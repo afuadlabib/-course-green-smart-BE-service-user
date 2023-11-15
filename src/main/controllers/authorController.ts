@@ -13,7 +13,7 @@ export default class AuthorController {
     try {
       const data = await AuthorService.find();
 
-      return res.status(200).json(data);
+      return res.status(200).json({ data });
     } catch (error) {
       next(error);
     }
@@ -31,7 +31,7 @@ export default class AuthorController {
         createdBy: req.currentUser?._id,
       });
 
-      return res.status(201).json(data);
+      return res.status(201).json({ data });
     } catch (error) {
       next(error);
     }
@@ -46,7 +46,7 @@ export default class AuthorController {
       const data = await AuthorService.findById(req.params.id);
       if (!data) throw new TypeError("Author not found");
 
-      return res.status(200).json(data);
+      return res.status(200).json({ data });
     } catch (error) {
       next(error);
     }
@@ -67,7 +67,7 @@ export default class AuthorController {
         { ...req.body }
       );
 
-      return res.status(200).json(data);
+      return res.status(200).json({ data });
     } catch (error) {
       next(error);
     }
@@ -87,7 +87,7 @@ export default class AuthorController {
         _id: findAuthor._id,
       });
 
-      return res.status(200).json(deletedAuthor);
+      return res.status(200).json({ data: deletedAuthor });
     } catch (error) {
       next(error);
     }
