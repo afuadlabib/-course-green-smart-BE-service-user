@@ -19,6 +19,7 @@ export default class AuthController {
       else if (req.body.email) filter.email = req.body.email;
 
       const findUser = await UserService.findOne(filter);
+
       if (!findUser) throw new TypeError("Invalid email/username/password");
       else if (!Encrypt.compare(req.body.password, findUser.password))
         throw new TypeError("Invalid email/username/password");
@@ -29,6 +30,7 @@ export default class AuthController {
         email: findUser.email,
         address: findUser.address,
         birthDay: findUser.birthDay,
+        imageUrl: findUser.imageUrl,
         role: findUser.role,
       };
 
@@ -57,6 +59,7 @@ export default class AuthController {
         email: createData.email,
         address: createData.address,
         birthDay: createData.birthDay,
+        imageUrl: createData.imageUrl,
         role: createData.role
       }
 
