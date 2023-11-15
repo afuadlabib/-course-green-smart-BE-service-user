@@ -27,6 +27,7 @@ export default class AuthController {
         _id: findUser._id,
         username: findUser.username,
         email: findUser.email,
+        address: findUser.address,
         birthDay: findUser.birthDay,
         role: findUser.role,
       };
@@ -55,7 +56,8 @@ export default class AuthController {
         username: createData.username,
         email: createData.email,
         address: createData.address,
-        birthDay: createData.birthDay
+        birthDay: createData.birthDay,
+        role: createData.role
       }
 
       return res.status(201).json({ token, data });
