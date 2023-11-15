@@ -25,7 +25,9 @@ export default class AuthRouter {
 
       .post("/register", this.authController.register)
 
-      .get("/:id", this.middleware.useAuth, this.authController.findById)
+      .use(this.middleware.useAuth)
+
+      .get("/:id",  this.authController.findById)
 
       .get("/", this.authController.find);
   }

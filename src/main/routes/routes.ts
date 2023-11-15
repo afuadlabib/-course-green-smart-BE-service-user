@@ -37,6 +37,8 @@ export default class Routes {
     return this.router
       .use("/auths", this.userRouter.useRouter())
 
+      .get("/isMe", this.middleware.useRefreshToken)
+
       .use(this.middleware.useAuth)
 
       .use("/students", this.studentRouter.useRouter())
