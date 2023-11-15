@@ -13,7 +13,7 @@ export default class StudentController {
     try {
       const data = await StudentService.find();
 
-      return res.status(200).json(data);
+      return res.status(200).json({ data });
     } catch (error) {
       next(error);
     }
@@ -31,7 +31,7 @@ export default class StudentController {
         createdBy: req.currentUser?._id,
       });
 
-      return res.status(201).json(data);
+      return res.status(201).json({data});
     } catch (error) {
       next(error);
     }
@@ -46,7 +46,7 @@ export default class StudentController {
       const data = await StudentService.findById(req.params.id);
       if (!data) throw new TypeError("Student not found");
 
-      return res.status(200).json(data);
+      return res.status(200).json({data});
     } catch (error) {
       next(error);
     }
@@ -67,7 +67,7 @@ export default class StudentController {
         { ...req.body }
       );
 
-      return res.status(200).json(data);
+      return res.status(200).json({data});
     } catch (error) {
       next(error);
     }
@@ -87,7 +87,7 @@ export default class StudentController {
         _id: findStudent._id,
       });
 
-      return res.status(200).json(deletedTeacher);
+      return res.status(200).json({data: deletedTeacher});
     } catch (error) {
       next(error);
     }
